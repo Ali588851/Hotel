@@ -1,5 +1,13 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaBed, FaWifi, FaUserFriends, FaBaby, FaClock, FaMapMarkerAlt, FaRulerCombined } from "react-icons/fa";
+import {
+  FaBed,
+  FaWifi,
+  FaUserFriends,
+  FaBaby,
+  FaClock,
+  FaMapMarkerAlt,
+  FaRulerCombined,
+} from "react-icons/fa";
 
 export default function RoomDetails() {
   const { state } = useLocation();
@@ -19,6 +27,15 @@ export default function RoomDetails() {
     { icon: <FaWifi />, text: "Free Wifi" },
     { icon: <FaClock />, text: "Check-in: 3pm / Check-out: 12pm" },
   ];
+
+  const handleBookNow = () => {
+    const cart = JSON.parse(localStorage.getItem("bookingCart")) || [];
+    const roomData = { img, title, price, nights: 1 };
+    cart.push(roomData);
+    localStorage.setItem("bookingCart", JSON.stringify(cart));
+    alert(`${title} added to your booking.`);
+    navigate("/book");
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4">
@@ -42,13 +59,14 @@ export default function RoomDetails() {
 
           <div className="flex gap-4 mt-8">
             <button
-              onClick={() => navigate('/book', { state: { roomImage: img, roomTitle: title } })}
+              onClick={handleBookNow}
               className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition"
             >
               Book Now
             </button>
             <button
-              className="border border-black px-6 py-2 rounded-full hover:bg-black hover:text-white transition" onClick={() => navigate('/contact')}
+              onClick={() => navigate("/contact")}
+              className="border border-black px-6 py-2 rounded-full hover:bg-black hover:text-white transition"
             >
               Contact Directly
             </button>

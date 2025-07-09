@@ -10,7 +10,7 @@ import Book from './pages/Book';
 import Wishlist from './pages/Wishlist';
 import Footer from './Components/Footer';
 import About from './pages/About';
-import RoomDetails from './pages/Roomdetails';
+import RoomDetails from './pages/RoomDetails'; 
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
         <Route path='/contact' element={<Contact />} />
         <Route path='/book' element={<Book />} />
         <Route path='/wishlist' element={<Wishlist />} />
-        <Route path='/room-details' element={<RoomDetails />} />
+        <Route path='/room-details' element={<RoomDetails />} /> 
       </Routes>
       <Footer />
     </>

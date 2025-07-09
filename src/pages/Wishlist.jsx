@@ -6,8 +6,6 @@ import room1 from '../images/room1.jpg';
 import room2 from '../images/room2.jpg';
 import room3 from '../images/room3.jpeg';
 
-const images = [room1, room2, room3];
-
 const roomData = [
   {
     img: room1,
@@ -44,6 +42,14 @@ export default function Wishlist() {
     localStorage.setItem('wishlist', JSON.stringify(updated));
   };
 
+  const handleBookNow = (room) => {
+    const cart = JSON.parse(localStorage.getItem('bookingCart')) || [];
+    const updatedCart = [...cart, { ...room, nights: 1 }];
+    localStorage.setItem('bookingCart', JSON.stringify(updatedCart));
+    alert(`${room.title} added to your booking.`);
+    navigate('/book');
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center px-4 py-10">
       <h2 className="text-4xl font-bold mb-6 text-gray-800">Your Wishlist</h2>
@@ -61,7 +67,7 @@ export default function Wishlist() {
                   key={index}
                   className="border p-4 rounded-lg bg-gray-50 hover:shadow-xl transition relative"
                 >
-                  {/* Image Click → Room Details */}
+                  {/* Image → Room Detail Page */}
                   <img
                     src={room.img}
                     alt={room.title}
@@ -84,28 +90,19 @@ export default function Wishlist() {
                   {/* Buttons */}
                   <div className="flex justify-between items-center mt-4">
                     <button
-                      onClick={() =>
-                        navigate('/book', {
-                          state: {
-                            roomImage: room.img,
-                            roomTitle: room.title
-                          }
-                        })
-                      }
+                      onClick={() => handleBookNow(room)}
                       className="bg-black text-white px-4 py-1 rounded-full text-sm hover:bg-gray-800 transition"
                     >
                       Book Now
                     </button>
 
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => handleRemove(index)}
-                        className="text-red-600 hover:text-red-800"
-                        title="Remove"
-                      >
-                        <FaTrash />
-                      </button>
-                    </div>
+                    <button
+                      onClick={() => handleRemove(index)}
+                      className="text-red-600 hover:text-red-800"
+                      title="Remove"
+                    >
+                      <FaTrash />
+                    </button>
                   </div>
                 </div>
               );
